@@ -1,0 +1,24 @@
+{
+  "apps": [
+    {
+      "name": "Epicure",
+      "script": "./dist/index.js"
+    }
+  ],
+  "deploy": {
+    "staging": {
+      "user": "ubuntu",
+      "host": ["ec2-13-49-21-96.eu-north-1.compute.amazonaws.com"],
+      "ref": "origin/main",
+      "repo": "git@github.com:hilaEzraMoveo/epicure-back.git",
+      "path": "/home/ubuntu/server-side/epicure-back",
+      "ssh_options": "StrictHostKeyChecking=no",
+      "post-deploy": "mkdir -p logs && npm i && pm2 reload ecosystem.json --env staging",
+      "pre-deploy-local": "echo 'Deploying code to servers'",
+      "env": {
+        "NODE_ENV": "staging",
+        "MONGO_DB_URL": "mongodb+srv://hilae:zFW6sznaa8JvgxBx@epicure-db.2yff1o1.mongodb.net/epicure?retryWrites=true&w=majority&appName=epicure-db"
+      }
+    }
+  }
+}
